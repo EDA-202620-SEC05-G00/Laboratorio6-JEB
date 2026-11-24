@@ -109,3 +109,20 @@ def size(my_map):
 
 def is_empty(my_map):
     return size(my_map) == 0
+
+def rehash(my_map):
+    table_previa = my_map["table"]
+    capacity = next_prime(2 * my_map["capacity"])
+
+    my_map["table"] = [{
+        "key": None,
+        "value": None,
+    }] * capacity
+    my_map["capacity"] = capacity
+    my_map["size"] = 0
+
+    for entry in table_previa:
+        if me.get_key(entry) is not None and me.get_key(entry) != "__EMPTY__":
+            put(my_map, me.get_key(entry), me.get_value(entry))
+    
+    return my_map
