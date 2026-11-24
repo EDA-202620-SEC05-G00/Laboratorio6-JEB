@@ -44,10 +44,12 @@ def put(my_map: dict, key, value):
             my_map["size"] += 1
             my_map["current_factor"] = my_map["size"] / my_map["capacity"]
 
+
 def contains(my_map, key):
     hv = hash_value(my_map, key)
     ocupied, first_avail = find_slot(my_map, key, hv)
     return ocupied
+
 
 def get(my_map, key):
     hv = hash_value(my_map, key)
@@ -56,6 +58,7 @@ def get(my_map, key):
     if ocupied:
         val = me.get_value(my_map["table"][first_avail])
     return val
+
 
 def remove(my_map, key):
     hv = hash_value(my_map, key)
@@ -69,6 +72,7 @@ def remove(my_map, key):
         })
         my_map["size"] -= 1
     return val
+
 
 def find_slot(my_map, key, hv):
     first_avail = None
@@ -88,6 +92,7 @@ def find_slot(my_map, key, hv):
         hv = (hv + 1) % my_map["capacity"]
     return ocupied, first_avail
 
+  
 def is_available(table, pos):
     entry = table[pos]
     if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
@@ -107,11 +112,13 @@ def comparar (key, entry):
 def size(my_map):
     return my_map["size"]
 
+
 def is_empty(my_map):
     return size(my_map) == 0
 
+
 def rehash(my_map):
-    table_previa = my_map["table"]
+    prev_tbl = my_map["table"]
     capacity = next_prime(2 * my_map["capacity"])
 
     my_map["table"] = [{
@@ -121,7 +128,7 @@ def rehash(my_map):
     my_map["capacity"] = capacity
     my_map["size"] = 0
 
-    for entry in table_previa:
+    for entry in prev_tbl:
         if me.get_key(entry) is not None and me.get_key(entry) != "__EMPTY__":
             put(my_map, me.get_key(entry), me.get_value(entry))
     
